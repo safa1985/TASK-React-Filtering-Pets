@@ -1,7 +1,9 @@
+import { useState } from "react";
 import pets from "../petsData";
 import PetItem from "./PetItem";
 
 function PetsList() {
+  // const [query, setquery] = useState(second);
   const petList = pets.map((pet) => <PetItem pet={pet} key={pet.id} />);
 
   return (
