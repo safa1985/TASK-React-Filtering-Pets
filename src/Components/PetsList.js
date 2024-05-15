@@ -3,7 +3,7 @@ import pets from "../petsData";
 import PetItem from "./PetItem";
 
 function PetsList() {
-  const [petType, setPetType] = useState("All");
+  const [petType, setPetType] = useState("");
   const selectedChange = (event) => {
     setPetType(event.target.value);
   };
