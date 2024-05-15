@@ -3,9 +3,35 @@ import pets from "../petsData";
 import PetItem from "./PetItem";
 
 function PetsList() {
-  // const [query, setquery] = useState(second);
-  const petList = pets.map((pet) => <PetItem pet={pet} key={pet.id} />);
+  const [petType, setPetType] = useState("All");
+  const selectedChange = (event) => {
+    setPetType(event.target.value);
+  };
 
+  const filterType = pets.filter((pet) => {
+    if (pet.type.includes(petType)) {
+      return true;
+    } else {
+      return false;
+    }
+  });
+  const [query, setquery] = useState("");
+
+  const handleChange = (e) => {
+    setquery(e.target.value);
+  };
+  const filterPetsName = filterType.filter((pet) => {
+    if (pet.name.toLowerCase().includes(query.toLowerCase())) {
+      return true;
+    } else {
+      return false;
+    }
+  });
+
+  //const petList = filterType.map((pet) => <PetItem pet={pet} key={pet.id} />);
+  const petList = filterPetsName.map((pet) => (
+    <PetItem pet={pet} key={pet.id} />
+  ));
   return (
     <section id="doctors" className="doctor-section pt-140">
       <div className="container">
@@ -16,17 +42,23 @@ function PetsList() {
                 Fur-ends
               </h1>
               <div className="input-group rounded">
+                {/*search Bar*/}
                 <input
                   type="search"
                   className="form-control rounded"
                   placeholder="Search"
                   aria-label="Search"
                   aria-describedby="search-addon"
+                  onChange={handleChange}
                 />
               </div>
               <br />
               Type:
-              <select className="form-select">
+              <select
+                className="form-select"
+                value={petType}
+                onChange={selectedChange}
+              >
                 <option value="" selected>
                   All
                 </option>
@@ -37,7 +69,6 @@ function PetsList() {
             </div>
           </div>
         </div>
-
         <div className="row justify-content-center">{petList}</div>
       </div>
     </section>
